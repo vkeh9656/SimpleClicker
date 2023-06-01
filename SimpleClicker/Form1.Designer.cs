@@ -74,7 +74,7 @@
             // 
             // lblTotal
             // 
-            this.lblTotal.BackColor = System.Drawing.SystemColors.GrayText;
+            this.lblTotal.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.lblTotal.Location = new System.Drawing.Point(6, 44);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(366, 53);
@@ -90,6 +90,7 @@
             this.btn1Add.TabIndex = 4;
             this.btn1Add.Text = "+1";
             this.btn1Add.UseVisualStyleBackColor = true;
+            this.btn1Add.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btn3Add
             // 
@@ -97,8 +98,9 @@
             this.btn3Add.Name = "btn3Add";
             this.btn3Add.Size = new System.Drawing.Size(188, 23);
             this.btn3Add.TabIndex = 3;
-            this.btn3Add.Text = "+5";
+            this.btn3Add.Text = "+3";
             this.btn3Add.UseVisualStyleBackColor = true;
+            this.btn3Add.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btn20Add
             // 
@@ -108,6 +110,7 @@
             this.btn20Add.TabIndex = 6;
             this.btn20Add.Text = "+20";
             this.btn20Add.UseVisualStyleBackColor = true;
+            this.btn20Add.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // label4
             // 
