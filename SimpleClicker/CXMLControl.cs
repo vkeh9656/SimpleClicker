@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -22,15 +24,18 @@ namespace SimpleClicker
 
         public Dictionary<string, string> XML_Reader(string strXMLPath)
         {
+            string strRijndaelText = File.ReadAllText(strXMLPath);
+            string strDecryptText = CRijndael.DecryptString(strRijndaelText, CRijndael._bKey);
+
             Dictionary<string, string> DXMLConfig = new Dictionary<string, string>();
 
-            using (XmlReader rd = XmlReader.Create(strXMLPath))  // using 벗어나면 메모리 자동 해제
+            using (XmlReader rd = XmlReader.Create(new StringReader(strDecryptText)))  // using 벗어나면 메모리 자동 해제
             {
                 while (rd.Read()) // XML Node를 읽는다
                 {
-                    if(rd.IsStartElement())
+                    if (rd.IsStartElement())
                     {
-                        if(rd.Name.Equals("SETTING"))
+                        if (rd.Name.Equals("SETTING"))
                         {
                             string strID = rd["ID"];
                             rd.Read();
@@ -67,9 +72,17 @@ namespace SimpleClicker
         }
 
 
+        /// <summary>
+        /// XML Data Write(데이터 저장)
+        /// </summary>
+        /// <param name="strXMLPath"></param>
+        /// <param name="DXMLConfig"></param>
         public void XML_Write(string strXMLPath, Dictionary<string, string> DXMLConfig)
         {
-            using (XmlWriter wr = XmlWriter.Create(strXMLPath))
+            //using (XmlWriter wr = XmlWriter.Create(strXMLPath))
+
+            StringBuilder sb = new StringBuilder();
+            using (XmlWriter wr = XmlWriter.Create(sb))
             {
                 wr.WriteStartDocument();
 
@@ -92,6 +105,10 @@ namespace SimpleClicker
 
                 wr.WriteEndDocument();
             }
+
+            string strRjindaelText = CRijndael.EncryptString(sb.ToString(), CRijndael._bKey);
+
+            File.WriteAllText(strXMLPath, strRjindaelText);
         }
 
     }
